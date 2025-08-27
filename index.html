@@ -217,9 +217,9 @@
         // Crée le message de confirmation caché
         const confirmation = document.createElement("p");
         confirmation.classList.add(
-            "text-green-600", "mt-3", "text-sm", "hidden"
+            "mt-3", "text-sm", "font-medium", "text-center",
+            "w-full", "p-3", "rounded-lg", "hidden"
         );
-        confirmation.innerText = "Merci ! Votre message a été reçu avec succès.";
 
         // Insère le message juste après le bouton
         submitBtn.insertAdjacentElement("afterend", confirmation);
@@ -236,25 +236,24 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        confirmation.classList.remove("hidden");
+                        confirmation.classList.remove("hidden", "bg-red-100", "text-red-700");
+                        confirmation.classList.add("bg-green-100", "text-green-700");
+                        confirmation.innerText = "✅ Merci ! Votre message a été envoyé avec succès.";
                         form.reset(); // Réinitialise les champs
                     } else {
-                        confirmation.classList.remove("hidden");
-                        confirmation.classList.remove("text-green-600");
-                        confirmation.classList.add("text-red-600");
-                        confirmation.innerText = "Erreur lors de l'envoi. Veuillez réessayer.";
+                        confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
+                        confirmation.classList.add("bg-red-100", "text-red-700");
+                        confirmation.innerText = "❌ Erreur lors de l'envoi. Veuillez réessayer.";
                     }
                 })
                 .catch(() => {
-                    confirmation.classList.remove("hidden");
-                    confirmation.classList.remove("text-green-600");
-                    confirmation.classList.add("text-red-600");
-                    confirmation.innerText = "Erreur réseau, veuillez réessayer.";
+                    confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
+                    confirmation.classList.add("bg-red-100", "text-red-700");
+                    confirmation.innerText = "⚠️ Erreur réseau, veuillez réessayer.";
                 });
         });
     });
 </script>
-
 
 
 <body class="font-sans antialiased text-gray-800 scroll-smooth">
