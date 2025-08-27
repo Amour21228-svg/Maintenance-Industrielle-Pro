@@ -210,49 +210,51 @@
 </head>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("#contactForm"); // ton formulaire
-  const confirmation = document.createElement("div");
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("#contactForm"); // Ton formulaire
+        const submitBtn = form.querySelector("button[type='submit']"); // Bouton envoyer
 
-  confirmation.classList.add(
-    "bg-green-100", "text-green-800", "p-4", "rounded", "mb-4", "text-center", "hidden"
-  );
-  confirmation.innerText = "Merci ! Votre message a été envoyé avec succès.";
+        // Crée le message de confirmation caché
+        const confirmation = document.createElement("p");
+        confirmation.classList.add(
+            "text-green-600", "mt-3", "text-sm", "hidden"
+        );
+        confirmation.innerText = "Merci ! Votre message a été reçu avec succès.";
 
-  form.parentNode.insertBefore(confirmation, form);
+        // Insère le message juste après le bouton
+        submitBtn.insertAdjacentElement("afterend", confirmation);
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-    const data = new FormData(form);
+            const data = new FormData(form);
 
-    fetch(form.action, {
-      method: form.method,
-      body: data,
-      headers: { "Accept": "application/json" }
-    })
-    .then(response => {
-      if (response.ok) {
-        confirmation.classList.remove("hidden");
-        form.reset(); // réinitialise le formulaire
-      } else {
-        response.json().then(data => {
-          confirmation.classList.remove("hidden");
-          confirmation.classList.remove("bg-green-100", "text-green-800");
-          confirmation.classList.add("bg-red-100", "text-red-800");
-          confirmation.innerText = data?.errors?.[0]?.message || "Erreur lors de l'envoi.";
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { "Accept": "application/json" }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        confirmation.classList.remove("hidden");
+                        form.reset(); // Réinitialise les champs
+                    } else {
+                        confirmation.classList.remove("hidden");
+                        confirmation.classList.remove("text-green-600");
+                        confirmation.classList.add("text-red-600");
+                        confirmation.innerText = "Erreur lors de l'envoi. Veuillez réessayer.";
+                    }
+                })
+                .catch(() => {
+                    confirmation.classList.remove("hidden");
+                    confirmation.classList.remove("text-green-600");
+                    confirmation.classList.add("text-red-600");
+                    confirmation.innerText = "Erreur réseau, veuillez réessayer.";
+                });
         });
-      }
-    })
-    .catch(() => {
-      confirmation.classList.remove("hidden");
-      confirmation.classList.remove("bg-green-100", "text-green-800");
-      confirmation.classList.add("bg-red-100", "text-red-800");
-      confirmation.innerText = "Erreur réseau, veuillez réessayer.";
     });
-  });
-});
 </script>
+
 
 
 <body class="font-sans antialiased text-gray-800 scroll-smooth">
@@ -638,23 +640,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
-                            <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                            <input type="text" id="name" name="name" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         </div>
 
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                            <input type="email" id="email" name="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                            <input type="email" id="email" name="email" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         </div>
 
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
-                            <input type="tel" id="phone" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                            <input type="tel" id="phone" name="phone"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         </div>
 
                         <div>
                             <label for="service" class="block text-sm font-medium text-gray-700">Service
                                 concerné</label>
-                            <select id="service" name="service" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                            <select id="service" name="service"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                                 <option value="">Sélectionnez un service</option>
                                 <option value="Maintenance préventive">Maintenance préventive</option>
                                 <option value="Maintenance corrective">Maintenance corrective</option>
@@ -666,7 +672,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
+                            <textarea id="message" name="message" rows="4" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
                         </div>
 
                         <div>
