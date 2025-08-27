@@ -690,12 +690,16 @@
                         ✅ Merci ! Votre demande a été envoyée avec succès.
                     </div>
                     
-                    <script>
+                     <!--<script>
                         const form = document.getElementById("contactForm");
                         const thankYouMessage = document.getElementById("thankYouMessage");
-                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); 
-                        
-                        // Tous les liens vers le formulaire
+                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
+
+                        // Si le formulaire vient d'être soumis via Netlify
+                        if (window.location.hash === "#success") {
+                            form.style.display = "none";
+                            thankYouMessage.classList.remove("hidden");
+                        }
 
                         // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
                         sendMessageLinks.forEach(link => {
@@ -709,7 +713,7 @@
                             });
                         });
 
-                    </script>
+                    </script> -->
 
                     <!-- Script pour Netlify Forms avec confirmation -->
                     <script>
