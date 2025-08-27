@@ -577,141 +577,151 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 lg:gap-8">
-                <div class="mb-8 lg:mb-0">
-                    <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Prenez contact avec nous</h2>
-                    <p class="text-lg text-gray-600 mb-8">Remplissez le formulaire et nous vous recontacterons dans les
-                        plus brefs délais.</p>
+    <!-- Formulaire -->
+    <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+        class="space-y-6">
+        <input type="hidden" name="form-name" value="contact">
 
-                    <!-- Formulaire -->
-                    <form id="contactForm" name="contact" method="POST" data-netlify="true" class="space-y-6">
-                        <input type="hidden" name="form-name" value="contact">
+        <!-- Champ invisible anti-spam -->
+        <p class="hidden">
+            <label>Ne pas remplir : <input name="bot-field"></label>
+        </p>
 
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
-                            <input type="text" id="name" name="name" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                        </div>
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
+            <input type="text" id="name" name="name" required
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+        </div>
 
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                            <input type="email" id="email" name="email" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                        </div>
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+            <input type="email" id="email" name="email" required
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+        </div>
 
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
-                            <input type="tel" id="phone" name="phone"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                        </div>
+        <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
+            <input type="tel" id="phone" name="phone"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+        </div>
 
-                        <div>
-                            <label for="service" class="block text-sm font-medium text-gray-700">Service
-                                concerné</label>
-                            <select id="service" name="service"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                                <option value="">Sélectionnez un service</option>
-                                <option value="Maintenance préventive">Maintenance préventive</option>
-                                <option value="Maintenance corrective">Maintenance corrective</option>
-                                <option value="Gestion des équipements">Gestion des équipements</option>
-                                <option value="Intervention d'urgence">Intervention d'urgence</option>
-                                <option value="Autre">Autre</option>
-                            </select>
-                        </div>
+        <div>
+            <label for="service" class="block text-sm font-medium text-gray-700">Service concerné</label>
+            <select id="service" name="service"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                <option value="">Sélectionnez un service</option>
+                <option value="Maintenance préventive">Maintenance préventive</option>
+                <option value="Maintenance corrective">Maintenance corrective</option>
+                <option value="Gestion des équipements">Gestion des équipements</option>
+                <option value="Intervention d'urgence">Intervention d'urgence</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
 
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <textarea id="message" name="message" rows="4" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
-                        </div>
+        <div>
+            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea id="message" name="message" rows="4" required
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
+        </div>
 
-                        <div>
-                            <button type="submit"
-                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
-                                <i class="fas fa-paper-plane mr-2"></i> Envoyer ma demande
-                            </button>
-                        </div>
-                    </form>
+        <div>
+            <button type="submit"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                <i class="fas fa-paper-plane mr-2"></i> Envoyer ma demande
+            </button>
+        </div>
+    </form>
 
-                    <!-- Message de confirmation caché par défaut -->
-                    <div id="thankYouMessage"
-                        class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
-                        ✅ Merci ! Votre demande a été envoyée avec succès.
-                    </div>
+    <!-- Message de confirmation caché par défaut -->
+    <div id="thankYouMessage"
+        class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
+        ✅ Merci ! Votre demande a été envoyée avec succès.
+    </div>
 
-                    <!-- Script pour Netlify Forms avec confirmation sans redirection -->
-                    <script>
-                        // Vérifie si le formulaire a été soumis et Netlify redirige vers #success
-                        if (window.location.hash === "#success") {
-                            const form = document.getElementById("contactForm");
-                            const message = document.getElementById("thankYouMessage");
+    <!-- Script pour soumission et reset -->
+    <script>
+        const form = document.getElementById("contactForm");
+        const thankYou = document.getElementById("thankYouMessage");
 
-                            form.style.display = "none";       // Cache le formulaire
-                            message.classList.remove("hidden"); // Affiche le message
-                        }
-                    </script>
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
+            const formData = new FormData(form);
+
+            try {
+                await fetch("/", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                form.reset();                         // 🟢 Vide le formulaire
+                form.style.display = "none";          // Cache le formulaire
+                thankYou.classList.remove("hidden");  // Affiche le message de succès
+            } catch (err) {
+                alert("❌ Une erreur est survenue. Veuillez réessayer.");
+                console.error(err);
+            }
+        });
+    </script>
+
+    </div>
+
+    <div class="lg:pl-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h3>
+
+        <div class="space-y-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
                 </div>
+                <div class="ml-3">
+                    <p class="text-lg text-gray-900 font-medium">Adresse</p>
+                    <p class="text-gray-600">Cotonou, Bénin</p>
+                </div>
+            </div>
 
-                <div class="lg:pl-8">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h3>
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-phone-alt text-blue-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-lg text-gray-900 font-medium">Téléphone</p>
+                    <p class="text-gray-600"><a href="https://wa.me/2290160889072" target="_blank"
+                            rel="noopener noreferrer" class="inline-flex items-center text-gray-600 hover:underline"><i
+                                class="fab fa-whatsapp text-green-500 mr-2"></i>01 60 88 90
+                            72</a><br>Urgence 24/7:<a href="tel:+0153783937" class="text-gray-600 hover:underline">01 53
+                            78 39 37</p>
+                </div>
+            </div>
 
-                    <div class="space-y-6">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-lg text-gray-900 font-medium">Adresse</p>
-                                <p class="text-gray-600">Cotonou, Bénin</p>
-                            </div>
-                        </div>
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-envelope text-blue-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-gray-600">
+                        <a href="mailto:kellymarlone2002@gmail.com"
+                            class="text-blue-600 underline">kellymarlone2002@gmail.com
+                        </a>
+                    </p>
+                </div>
+            </div>
 
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-phone-alt text-blue-600 text-xl"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-lg text-gray-900 font-medium">Téléphone</p>
-                                <p class="text-gray-600"><a href="https://wa.me/2290160889072" target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="inline-flex items-center text-gray-600 hover:underline"><i
-                                            class="fab fa-whatsapp text-green-500 mr-2"></i>01 60 88 90
-                                        72</a><br>Urgence 24/7:<a href="tel:+0153783937"
-                                        class="text-gray-600 hover:underline">01 53 78 39 37</p>
-                            </div>
-                        </div>
-
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-envelope text-blue-600 text-xl"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-gray-600">
-                                    <a href="mailto:kellymarlone2002@gmail.com"
-                                        class="text-blue-600 underline">kellymarlone2002@gmail.com
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-clock text-blue-600 text-xl"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-lg text-gray-900 font-medium">Horaires</p>
-                                <p class="text-gray-600">Lundi-vendredi: 8h-19h<br>Urgences: 7j/7</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sections 'Nos réseaux sociaux' et carte supprimées sur demande -->
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-clock text-blue-600 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-lg text-gray-900 font-medium">Horaires</p>
+                    <p class="text-gray-600">Lundi-vendredi: 8h-19h<br>Urgences: 7j/7</p>
                 </div>
             </div>
         </div>
+
+        <!-- Sections 'Nos réseaux sociaux' et carte supprimées sur demande -->
+    </div>
+    </div>
+    </div>
     </section>
 
     <!-- Footer -->
