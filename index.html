@@ -238,7 +238,7 @@
                     if (response.ok) {
                         confirmation.classList.remove("hidden", "bg-red-100", "text-red-700");
                         confirmation.classList.add("bg-green-100", "text-green-700");
-                        confirmation.innerText = "✅ Merci ! Votre message a été envoyé avec succès.";
+                        confirmation.innerText = "✅ Merci ! Votre message a été reçu avec succès.";
                         form.reset(); // Réinitialise les champs
                     } else {
                         confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
@@ -254,6 +254,7 @@
         });
     });
 </script>
+
 
 
 <body class="font-sans antialiased text-gray-800 scroll-smooth">
@@ -624,6 +625,7 @@
     </section>
 
     <!-- Contact Section -->
+    <!-- Formulaire -->
     <section id="contact" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8">
@@ -632,7 +634,8 @@
                     <p class="text-lg text-gray-600 mb-8">Remplissez le formulaire et nous vous recontacterons dans les
                         plus brefs délais.</p>
 
-                    <form id="contactForm" name="contact" method="POST" data-netlify="true" class="space-y-6">
+                    <form id="contactForm" name="contact" method="POST" data-netlify="true" action="/#success"
+                        class="space-y-6">
                         <input type="hidden" name="form-name" value="contact">
 
                         <div>
@@ -679,42 +682,46 @@
                                 <i class="fas fa-paper-plane mr-2"></i> Envoyer ma demande
                             </button>
                         </div>
-
-                        <!-- Message de confirmation -->
-                        <div id="formMessage" class="hidden text-center p-4 rounded-md mt-4 font-medium"></div>
                     </form>
 
-                    <!-- Script pour gérer l’envoi avec message personnalisé -->
+                    <!-- Message de confirmation caché par défaut -->
+                    <div id="thankYouMessage"
+                        class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
+                        ✅ Merci ! Votre demande a été envoyée avec succès.
+                    </div>
+                    
                     <script>
                         const form = document.getElementById("contactForm");
-                        const messageBox = document.getElementById("formMessage");
+                        const thankYouMessage = document.getElementById("thankYouMessage");
+                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
 
-                        form.addEventListener("submit", async function (event) {
-                            event.preventDefault(); // Empêche le rechargement par défaut
-                            const formData = new FormData(form);
+                        // Si le formulaire vient d'être soumis via Netlify
+                        if (window.location.hash === "#success") {
+                            form.style.display = "none";
+                            thankYouMessage.classList.remove("hidden");
+                        }
 
-                            try {
-                                const response = await fetch("/", {
-                                    method: "POST",
-                                    body: formData
-                                });
-
-                                if (response.ok) {
-                                    messageBox.textContent = "✅ Merci ! Votre message a été envoyé avec succès.";
-                                    messageBox.className = "text-center p-4 rounded-md mt-4 font-medium bg-green-100 text-green-800 border border-green-300";
-                                    messageBox.classList.remove("hidden");
-                                    form.reset(); // Vide les champs
-                                } else {
-                                    throw new Error("Erreur serveur");
-                                }
-                            } catch (error) {
-                                messageBox.textContent = "❌ Une erreur est survenue. Veuillez réessayer.";
-                                messageBox.className = "text-center p-4 rounded-md mt-4 font-medium bg-red-100 text-red-800 border border-red-300";
-                                messageBox.classList.remove("hidden");
-                            }
+                        // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
+                        sendMessageLinks.forEach(link => {
+                            link.addEventListener("click", (e) => {
+                                e.preventDefault(); // Empêche le scroll automatique
+                                form.style.display = "block"; // Rouvre le formulaire
+                                thankYouMessage.classList.add("hidden"); // Cache le message de succès
+                                form.reset(); // Réinitialise les champs
+                                history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
+                                form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
+                            });
                         });
+
                     </script>
 
+                    <!-- Script pour Netlify Forms avec confirmation -->
+                    <script>
+                        if (window.location.hash === "#success") {
+                            document.getElementById("contactForm").style.display = "none";
+                            document.getElementById("thankYouMessage").classList.remove("hidden");
+                        }
+                    </script>
 
                 </div>
 
