@@ -256,7 +256,6 @@
 </script>
 
 
-
 <body class="font-sans antialiased text-gray-800 scroll-smooth">
     <!-- Progress bar -->
     <div class="progress-container">
@@ -689,31 +688,6 @@
                         class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
                         ✅ Merci ! Votre demande a été envoyée avec succès.
                     </div>
-                    
-                    <script>
-                        const form = document.getElementById("contactForm");
-                        const thankYouMessage = document.getElementById("thankYouMessage");
-                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
-
-                        // Si le formulaire vient d'être soumis via Netlify
-                        if (window.location.hash === "#success") {
-                            form.style.display = "none";
-                            thankYouMessage.classList.remove("hidden");
-                        }
-
-                        // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
-                        sendMessageLinks.forEach(link => {
-                            link.addEventListener("click", (e) => {
-                                e.preventDefault(); // Empêche le scroll automatique
-                                form.style.display = "block"; // Rouvre le formulaire
-                                thankYouMessage.classList.add("hidden"); // Cache le message de succès
-                                form.reset(); // Réinitialise les champs
-                                history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
-                                form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
-                            });
-                        });
-
-                    </script>
 
                     <!-- Script pour Netlify Forms avec confirmation -->
                     <script>
