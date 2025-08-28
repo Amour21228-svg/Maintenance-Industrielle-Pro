@@ -586,8 +586,8 @@
                     <p class="text-lg text-gray-600 mb-8">Remplissez le formulaire et nous vous recontacterons dans les
                         plus brefs délais.</p>
 
-                    <form class="space-y-6" action="https://formspree.io/f/xbjndqyv" method="POST">
-                        <input type="hidden" name="_subject" value="Nouvelle demande de contact - Kelly Maintenance">
+                    <form id="contactForm" name="contact" method="POST" data-netlify="true" class="space-y-6">
+                        <input type="hidden" name="form-name" value="contact">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
                             <input type="text" id="name" name="name" required
@@ -643,6 +643,11 @@
                             </button>
                         </div>
                     </form>
+                    <!-- Message de confirmation -->
+                    <div id="thankYouMessage"
+                        class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
+                        ✅ Merci ! Votre demande a été envoyée avec succès.
+                    </div>
                 </div>
 
                 <!-- Coordonnées -->
@@ -691,6 +696,49 @@
 
             </div>
         </div>
+        <!-- Script Netlify + glissement -->
+        <script>
+            const form = document.getElementById("contactForm");
+            const thankYouMessage = document.getElementById("thankYouMessage");
+            const formWrapper = document.getElementById("formWrapper");
+
+            // Initialisation pour animation
+            formWrapper.style.transition = "max-height 0.8s ease, padding 0.8s ease, margin 0.8s ease";
+            formWrapper.style.overflow = "hidden";
+            formWrapper.style.maxHeight = formWrapper.scrollHeight + "px";
+
+            form.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+
+                try {
+                    // Envoi Netlify Forms
+                    await fetch("/", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    // Vider le formulaire
+                    form.reset();
+
+                    // Glissement progressif vers le haut
+                    formWrapper.style.maxHeight = "0";
+                    formWrapper.style.paddingTop = "0";
+                    formWrapper.style.paddingBottom = "0";
+                    formWrapper.style.marginBottom = "0";
+
+                    // Afficher le message de confirmation après la transition
+                    setTimeout(() => {
+                        thankYouMessage.style.display = "block";
+                    }, 800); // correspond à la durée de la transition
+
+                } catch (err) {
+                    alert("Erreur lors de l’envoi. Veuillez réessayer.");
+                    console.error(err);
+                }
+            });
+        </script>
     </section>
 
 
