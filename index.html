@@ -216,10 +216,7 @@
 
         // Crée le message de confirmation caché
         const confirmation = document.createElement("p");
-        confirmation.classList.add(
-            "mt-3", "text-sm", "font-medium", "text-center",
-            "w-full", "p-3", "rounded-lg", "hidden"
-        );
+        confirmation.classList.add("mt-3", "text-sm", "font-medium", "text-center","w-full", "p-3", "rounded-lg", "hidden");
 
         // Insère le message juste après le bouton
         submitBtn.insertAdjacentElement("afterend", confirmation);
@@ -672,8 +669,7 @@
 
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <textarea id="message" name="message" rows="4" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
+                            <textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
                         </div>
 
                         <div>
@@ -690,7 +686,7 @@
                         ✅ Merci ! Votre demande a été envoyée avec succès.
                     </div>
                     
-                     <!--<script>
+                    <script>
                         const form = document.getElementById("contactForm");
                         const thankYouMessage = document.getElementById("thankYouMessage");
                         const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
@@ -713,7 +709,7 @@
                             });
                         });
 
-                    </script> -->
+                    </script>
 
                     <!-- Script pour Netlify Forms avec confirmation 
                     <script>
