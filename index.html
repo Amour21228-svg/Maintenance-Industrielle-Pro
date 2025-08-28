@@ -631,17 +631,10 @@
                     <p class="text-lg text-gray-600 mb-8">Remplissez le formulaire et nous vous recontacterons dans les
                         plus brefs délais.</p>
 
-                    <!-- <form id="contactForm" name="contact" method="POST" data-netlify="true" action="/#success"
+                    <form id="contactForm" name="contact" method="POST" data-netlify="true" action="/#success"
                         class="space-y-6">
-                        <input type="hidden" name="form-name" value="contact"> -->
-
-                    <form id="contactForm" name="contact" method="POST" data-netlify="true"  netlify-honeypot="bot-field"
-                        class="space-y-6">
-                        <!-- Champs cachés nécessaires pour Netlify -->
                         <input type="hidden" name="form-name" value="contact">
-                        <p class="hidden">
-                            <label>Ne pas remplir ce champ : <input name="bot-field"></label>
-                        </p>
+                        
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
                             <input type="text" id="name" name="name" required
@@ -705,31 +698,31 @@
                 </div>
 
                 <script>
-                        const form = document.getElementById("contactForm");
-                        const thankYouMessage = document.getElementById("thankYouMessage");
-                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
+                    const form = document.getElementById("contactForm");
+                    const thankYouMessage = document.getElementById("thankYouMessage");
+                    const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
 
-                        // Si le formulaire vient d'être soumis via Netlify
-                        if (window.location.hash === "#success") {
-                            form.style.display = "none";
-                            thankYouMessage.classList.remove("hidden");
-                        }
+                    // Si le formulaire vient d'être soumis via Netlify
+                    if (window.location.hash === "#success") {
+                        form.style.display = "none";
+                        thankYouMessage.classList.remove("hidden");
+                    }
 
-                        // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
-                        sendMessageLinks.forEach(link => {
-                            link.addEventListener("click", (e) => {
-                                e.preventDefault(); // Empêche le scroll automatique
-                                form.style.display = "block"; // Rouvre le formulaire
-                                thankYouMessage.classList.add("hidden"); // Cache le message de succès
-                                form.reset(); // Réinitialise les champs
-                                history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
-                                form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
-                            });
+                    // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
+                    sendMessageLinks.forEach(link => {
+                        link.addEventListener("click", (e) => {
+                            e.preventDefault(); // Empêche le scroll automatique
+                            form.style.display = "block"; // Rouvre le formulaire
+                            thankYouMessage.classList.add("hidden"); // Cache le message de succès
+                            form.reset(); // Réinitialise les champs
+                            history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
+                            form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
                         });
+                    });
 
-                    </script>
+                </script>
 
-                    <!-- Script pour Netlify Forms avec confirmation 
+                <!-- Script pour Netlify Forms avec confirmation 
                     <script>
                         if (window.location.hash === "#success") {
                             document.getElementById("contactForm").style.display = "none";
