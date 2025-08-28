@@ -209,6 +209,53 @@
     </style>
 </head>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("#contactForm"); // Ton formulaire
+        const submitBtn = form.querySelector("button[type='submit']"); // Bouton envoyer
+
+        // Crée le message de confirmation caché
+        const confirmation = document.createElement("p");
+        confirmation.classList.add(
+            "mt-3", "text-sm", "font-medium", "text-center",
+            "w-full", "p-3", "rounded-lg", "hidden"
+        );
+
+        // Insère le message juste après le bouton
+        submitBtn.insertAdjacentElement("afterend", confirmation);
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const data = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { "Accept": "application/json" }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        confirmation.classList.remove("hidden", "bg-red-100", "text-red-700");
+                        confirmation.classList.add("bg-green-100", "text-green-700");
+                        confirmation.innerText = "✅ Merci ! Votre message a été envoyé avec succès.";
+                        form.reset(); // Réinitialise les champs
+                    } else {
+                        confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
+                        confirmation.classList.add("bg-red-100", "text-red-700");
+                        confirmation.innerText = "❌ Erreur lors de l'envoi. Veuillez réessayer.";
+                    }
+                })
+                .catch(() => {
+                    confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
+                    confirmation.classList.add("bg-red-100", "text-red-700");
+                    confirmation.innerText = "⚠️ Erreur réseau, veuillez réessayer.";
+                });
+        });
+    });
+</script>
+
+
 <body class="font-sans antialiased text-gray-800 scroll-smooth">
     <!-- Progress bar -->
     <div class="progress-container">
