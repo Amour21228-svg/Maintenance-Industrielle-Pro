@@ -633,8 +633,9 @@
 
                     <form id="contactForm" name="contact" method="POST" data-netlify="true" action="/#success"
                         class="space-y-6">
+                        <!-- Champ caché obligatoire pour Netlify -->
                         <input type="hidden" name="form-name" value="contact">
-                        
+
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
                             <input type="text" id="name" name="name" required
@@ -697,32 +698,32 @@
                     </script>
                 </div>
 
-                <script>
-                    const form = document.getElementById("contactForm");
-                    const thankYouMessage = document.getElementById("thankYouMessage");
-                    const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
+                <!-- <script>
+                        const form = document.getElementById("contactForm");
+                        const thankYouMessage = document.getElementById("thankYouMessage");
+                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
 
-                    // Si le formulaire vient d'être soumis via Netlify
-                    if (window.location.hash === "#success") {
-                        form.style.display = "none";
-                        thankYouMessage.classList.remove("hidden");
-                    }
+                        // Si le formulaire vient d'être soumis via Netlify
+                        if (window.location.hash === "#success") {
+                            form.style.display = "none";
+                            thankYouMessage.classList.remove("hidden");
+                        }
 
-                    // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
-                    sendMessageLinks.forEach(link => {
-                        link.addEventListener("click", (e) => {
-                            e.preventDefault(); // Empêche le scroll automatique
-                            form.style.display = "block"; // Rouvre le formulaire
-                            thankYouMessage.classList.add("hidden"); // Cache le message de succès
-                            form.reset(); // Réinitialise les champs
-                            history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
-                            form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
+                        // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
+                        sendMessageLinks.forEach(link => {
+                            link.addEventListener("click", (e) => {
+                                e.preventDefault(); // Empêche le scroll automatique
+                                form.style.display = "block"; // Rouvre le formulaire
+                                thankYouMessage.classList.add("hidden"); // Cache le message de succès
+                                form.reset(); // Réinitialise les champs
+                                history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
+                                form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
+                            });
                         });
-                    });
 
-                </script>
+                    </script>
 
-                <!-- Script pour Netlify Forms avec confirmation 
+                    <!-- Script pour Netlify Forms avec confirmation 
                     <script>
                         if (window.location.hash === "#success") {
                             document.getElementById("contactForm").style.display = "none";
