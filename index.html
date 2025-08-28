@@ -833,7 +833,7 @@
         </div>
     </footer>
 
-    <!-- Modal -->
+    
     <div id="serviceModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -887,36 +887,7 @@
             });
         });
 
-        // Contact form submission
-        const contactForm = document.querySelector('#contact form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-
-                const formData = new FormData(contactForm);
-
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        alert('Merci pour votre message. Nous vous contacterons rapidement.');
-                        contactForm.reset();
-                    } else {
-                        throw new Error('Erreur lors de l\'envoi du formulaire');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement par téléphone.');
-                }
-            });
-        }
-
+        
         // Newsletter form submission
         const newsletterForm = document.getElementById('newsletter-form');
         if (newsletterForm) {
