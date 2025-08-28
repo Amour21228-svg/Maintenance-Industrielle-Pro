@@ -209,49 +209,6 @@
     </style>
 </head>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector("#contactForm"); // Ton formulaire
-        const submitBtn = form.querySelector("button[type='submit']"); // Bouton envoyer
-
-        // Crée le message de confirmation caché
-        const confirmation = document.createElement("p");
-        confirmation.classList.add("mt-3", "text-sm", "font-medium", "text-center", "w-full", "p-3", "rounded-lg", "hidden");
-
-        // Insère le message juste après le bouton
-        submitBtn.insertAdjacentElement("afterend", confirmation);
-
-       <!-- form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const data = new FormData(form);
-
-        fetch("/", {  // ✅ toujours vers "/"
-              method: "POST",
-              body: new URLSearchParams(data).toString(),
-              headers: { "Content-Type": "application/x-www-form-urlencoded" }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        confirmation.classList.remove("hidden", "bg-red-100", "text-red-700");
-                        confirmation.classList.add("bg-green-100", "text-green-700");
-                        confirmation.innerText = "✅ Merci ! Votre message a été reçu avec succès.";
-                        form.reset(); // Réinitialise les champs
-                    } else {
-                        confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
-                        confirmation.classList.add("bg-red-100", "text-red-700");
-                        confirmation.innerText = "❌ Erreur lors de l'envoi. Veuillez réessayer.";
-                    }
-                })
-                .catch(() => {
-                    confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
-                    confirmation.classList.add("bg-red-100", "text-red-700");
-                    confirmation.innerText = "⚠️ Erreur réseau, veuillez réessayer.";
-                });
-        });
-    });
-</script>
-
 <body class="font-sans antialiased text-gray-800 scroll-smooth">
     <!-- Progress bar -->
     <div class="progress-container">
@@ -489,10 +446,10 @@
                                 <i class="fas fa-user-tie text-xl"></i>
                             </div>
                         </div>
-                        <div class="ml-3">
-                            <p class="text-lg text-gray-900 font-medium">E-mail</p>
-                            <p class="text-gray-600"><a href="mailto:kellymarlone2002@gmail.com"
-                                    class="text-blue-600 underline">kellymarlone2002@gmail.com</a></p>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">Équipe certifiée et expérimentée</h3>
+                            <p class="mt-2 text-gray-600">Nos techniciens possèdent les certifications les plus
+                                exigeantes du secteur et une expérience terrain solide.</p>
                         </div>
                     </div>
 
@@ -542,6 +499,7 @@
                 </div>
             </div>
 
+            <!-- Etapes Processus Section -->
             <div class="mt-12 bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="md:flex">
                     <div class="md:w-1/2 p-8 bg-blue-600 text-white">
@@ -607,7 +565,7 @@
             <p class="text-xl mb-8">Notre équipe est à votre disposition pour répondre à toutes vos questions et
                 élaborer une solution adaptée à vos besoins.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="tel:+2296060889072"
+                <a href="tel:+2290160889072"
                     class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
                     <i class="fas fa-phone-alt mr-2"></i> Appelez-nous
                 </a>
@@ -623,40 +581,31 @@
     <section id="contact" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8">
-
-                <!-- Formulaire -->
                 <div class="mb-8 lg:mb-0">
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Prenez contact avec nous</h2>
                     <p class="text-lg text-gray-600 mb-8">Remplissez le formulaire et nous vous recontacterons dans les
                         plus brefs délais.</p>
 
-                    <!-- ✅ Formulaire Netlify -->
-                    <form id="contactForm" name="contact" method="POST" data-netlify="true" action="/#success"
-                        class="space-y-6">
-                        <input type="hidden" name="form-name" value="contact">
-
-                        <!-- Nom -->
+                    <form class="space-y-6" action="https://formspree.io/f/xbjndqyv" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvelle demande de contact - Kelly Maintenance">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
                             <input type="text" id="name" name="name" required
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         </div>
 
-                        <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                             <input type="email" id="email" name="email" required
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         </div>
 
-                        <!-- Téléphone -->
                         <div>
                             <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
                             <input type="tel" id="phone" name="phone"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
                         </div>
 
-                        <!-- Service -->
                         <div>
                             <label for="service" class="block text-sm font-medium text-gray-700">Service
                                 concerné</label>
@@ -667,18 +616,26 @@
                                 <option value="Maintenance corrective">Maintenance corrective</option>
                                 <option value="Gestion des équipements">Gestion des équipements</option>
                                 <option value="Intervention d'urgence">Intervention d'urgence</option>
+                                <option value="Maintenance appareils électro-ménagers">Maintenance appareils
+                                    électro-ménagerss</option>
+                                <option value="Maintenance installations électriques">Maintenance installations
+                                    électriques</option>
+                                <option value="Maintenance informatique (matériel et logiciels)">Maintenance
+                                    informatique (matériel et logiciels)</option>
+                                <option value="Maintenance infrastructures (bâtiments et réseaux)">Maintenance
+                                    infrastructures (bâtiments et réseaux)</option>
+                                <option value="Maintenance véhicules et des transports">Maintenance véhicules et des
+                                    transports</option>
                                 <option value="Autre">Autre</option>
                             </select>
                         </div>
 
-                        <!-- Message -->
                         <div>
                             <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
                             <textarea id="message" name="message" rows="4" required
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
                         </div>
 
-                        <!-- Bouton -->
                         <div>
                             <button type="submit"
                                 class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
@@ -686,20 +643,6 @@
                             </button>
                         </div>
                     </form>
-
-                    <!-- Message de confirmation -->
-                    <div id="thankYouMessage"
-                        class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
-                        ✅ Merci ! Votre demande a été envoyée avec succès.
-                    </div>
-
-                    <script>
-                        if (window.location.hash === "#success") {
-                            document.getElementById("contactForm").style.display = "none";
-                            document.getElementById("thankYouMessage").classList.remove("hidden");
-                            history.replaceState(null, null, " "); // supprime #success de l’URL
-                        }
-                    </script>
                 </div>
 
                 <!-- Coordonnées -->
@@ -731,8 +674,8 @@
                             <i class="fas fa-envelope text-blue-600 text-xl"></i>
                             <div class="ml-3">
                                 <p class="text-gray-600">
-                                    <a href="mailto:kellymarlone2002@gmail.com"
-                                        class="text-blue-600 underline">kellymarlone2002@gmail.com</a>
+                                    <a href="mailto:maintenancepro@gmail.com"
+                                        class="text-blue-600 underline">maintenancepro@gmail.com</a>
                                 </p>
                             </div>
                         </div>
@@ -823,7 +766,7 @@
                 <p class="text-gray-400 text-sm">© 2023 MaintenanceIndustriellePro. Tous droits réservés.</p>
                 <div class="mt-4 md:mt-0">
                     <a href="#" class="text-gray-400 hover:text-white text-sm mr-4 transition-colors duration-200"><b>By
-                            KelMultitek</b></a>
+                            VisionFutur</b></a>
                     <a href="#" class="text-gray-400 hover:text-white text-sm mr-4 transition-colors duration-200">Plan
                         du site</a>
                     <a href="#"
@@ -833,7 +776,7 @@
         </div>
     </footer>
 
-    
+    <!-- Modal -->
     <div id="serviceModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -865,6 +808,9 @@
                 const targetId = this.getAttribute('href');
                 if (!targetId || targetId === '#') return;
 
+                const mobileMenu = document.getElementById('mobile-menu');
+
+                // If link points to contact, only show contact when data-open-contact is present
                 if (targetId === '#contact') {
                     e.preventDefault();
                     showContactSection();
@@ -887,7 +833,39 @@
             });
         });
 
-        
+        // Contact form submission
+        const contactForm = document.querySelector('#contact form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                // Ensure contact section is visible when submitting
+                showContactSection();
+
+                const formData = new FormData(contactForm);
+
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        alert('Merci pour votre message. Nous vous contacterons rapidement.');
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Erreur lors de l\'envoi du formulaire');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement par téléphone.');
+                }
+            });
+        }
+
         // Newsletter form submission
         const newsletterForm = document.getElementById('newsletter-form');
         if (newsletterForm) {
@@ -933,6 +911,25 @@
                 progressBar.style.width = scrollPercentage + '%';
             });
         }
+
+        // FAQ functionality
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function () {
+                const answer = this.nextElementSibling;
+                const icon = this.querySelector('i');
+
+                // Toggle answer visibility
+                answer.classList.toggle('hidden');
+
+                // Rotate icon
+                if (answer.classList.contains('hidden')) {
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
 
         // Service modal functionality
         const serviceCards = document.querySelectorAll('.service-card button');
