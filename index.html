@@ -1,1097 +1,742 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance Industrielle Pro - Solutions sur mesure</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .hero {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1513828583688-c52646db42da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        .service-card {
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-left-color: #3b82f6;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            color: black;
-            animation: modalFadeIn 0.3s ease-out;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .map-container {
-            overflow: hidden;
-            padding-bottom: 56.25%;
-            position: relative;
-            height: 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .map-container iframe {
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            border: none;
-        }
-
-        #contact {
-            display: none;
-        }
-
-        #contact.show {
-            display: block;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .floating-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 99;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #3b82f6;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .floating-button:hover {
-            transform: scale(1.1);
-            background-color: #2563eb;
-        }
-
-        .floating-button i {
-            font-size: 24px;
-        }
-
-        .testimonial-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .stats-item {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 8px;
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .stats-item:hover {
-            transform: scale(1.05);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            z-index: 99;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #3b82f6;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            background-color: #2563eb;
-        }
-
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: transparent;
-            z-index: 1000;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: #3b82f6;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision Futuriste - Site Professionnel</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/6.4.0/css/all.min.css">
+<style>
+/* Custom CSS */
+@keyframes float {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-20px); }
+}
+.floating {
+animation: float 6s ease-in-out infinite;
+}
+.gradient-text {
+background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+}
+.glass-effect {
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.parallax {
+background-attachment: fixed;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+.card-hover {
+transition: all 0.3s ease;
+}
+.card-hover:hover {
+transform: translateY(-10px);
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px
+rgba(0, 0, 0, 0.04);
+}
+.typing-effect::after {
+content: "|";
+animation: blink 1s infinite;
+}
+@keyframes blink {
+0%, 100% { opacity: 1; }
+50% { opacity: 0; }
+}
+</style>
 </head>
-
+<body class="bg-gray-900 text-white font-sans overflow-x-hidden">
+<!-- Navigation -->
+<nav class="glass-effect fixed w-full z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<span class="text-2xl font-bold gradienttext">VisionFutur</span>
+</div>
+</div>
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-4">
+<a href="#home" class="px-3 py-2 rounded-md text-sm fontmedium hover:bg-gray-800 transition duration-300">Accueil</a>
+<a href="#services" class="px-3 py-2 rounded-md text-sm 
+font-medium hover:bg-gray-800 transition duration-300">Services</a>
+<a href="#portfolio" class="px-3 py-2 rounded-md text-sm 
+font-medium hover:bg-gray-800 transition duration-300">Portfolio</a>
+<a href="#about" class="px-3 py-2 rounded-md text-sm 
+font-medium hover:bg-gray-800 transition duration-300">À propos</a>
+<a href="#contact" class="px-3 py-2 rounded-md text-sm 
+font-medium bg-blue-600 hover:bg-blue-700 transition duration-300">Contact</a>
+</div>
+</div>
+<div class="-mr-2 flex md:hidden">
+<button id="mobile-menu-button" class="inline-flex itemscenter justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bggray-700 focus:outline-none">
+<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round"
+stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+</svg>
+</button>
+</div>
+</div>
+</div>
+<!-- Mobile menu -->
+<div id="mobile-menu" class="hidden md:hidden">
+<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+<a href="#home" class="block px-3 py-2 rounded-md text-base fontmedium hover:bg-gray-800 transition duration-300">Accueil</a>
+<a href="#services" class="block px-3 py-2 rounded-md text-base 
+font-medium hover:bg-gray-800 transition duration-300">Services</a>
+<a href="#portfolio" class="block px-3 py-2 rounded-md text-base 
+font-medium hover:bg-gray-800 transition duration-300">Portfolio</a>
+<a href="#about" class="block px-3 py-2 rounded-md text-base 
+font-medium hover:bg-gray-800 transition duration-300">À propos</a>
+<a href="#contact" class="block px-3 py-2 rounded-md text-base 
+font-medium bg-blue-600 hover:bg-blue-700 transition duration-300">Contact</a>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section id="home" class="min-h-screen flex items-center justify-center 
+parallax" style="background-image: url('https://images.unsplash.com/photo1516321318423-f06f85e504b3?ixlib=rb4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c
+rop&w=2070&q=80');">
+<div class="absolute inset-0 bg-black opacity-50"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 textcenter">
+<h1 class="text-5xl md:text-7xl font-bold mb-6">
+<span class="gradient-text typing-effect">Transformez</span>
+votre vision en réalité
+</h1>
+<p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+Nous créons des expériences digitales exceptionnelles qui 
+captivent et inspirent.
+</p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<a href="#contact" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 
+rounded-lg text-lg font-semibold transition duration-300 transform hover:scale105">
+Commencez votre projet
+</a>
+<a href="#services" class="px-8 py-4 glass-effect hover:bg-gray800 rounded-lg text-lg font-semibold transition duration-300 transform 
+hover:scale-105">
+Nos services
+</a>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+<a href="#services" class="animate-bounce inline-block">
+<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor"
+viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path stroke-linecap="round" stroke-linejoin="round" strokewidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+</svg>
+</a>
+</div>
+</section>
+<!-- Services Section -->
+<section id="services" class="py-20 bg-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Nos 
+Services</h2>
+<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+Nous offrons une gamme complète de services pour répondre à 
+tous vos besoins digitaux.
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Service 1 -->
+<div class="glass-effect rounded-xl p-8 card-hover">
+<div class="w-16 h-16 bg-blue-600 rounded-lg flex itemscenter justify-center mb-6">
+<i class="fas fa-code text-2xl text-white"></i>
+</div>
+<h3 class="text-2xl font-bold mb-3">Développement Web</h3>
+<p class="text-gray-300 mb-4">
+Création de sites web sur mesure, performants et adaptés 
+à tous les appareils.
+</p>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center">
+<i class="fas fa-check-circle text-blue-400 mr2"></i>
+Sites vitrines
+</li>
+<li class="flex items-center">
+<i class="fas fa-check-circle text-blue-400 mr2"></i>
+E-commerce
+</li>
+<li class="flex items-center">
+<i class="fas fa-check-circle text-blue-400 mr2"></i>
+Applications web
+</li>
+</ul>
+</div>
+<!-- Service 2 -->
+<div class="glass-effect rounded-xl p-8 card-hover">
+<div class="w-16 h-16 bg-purple-600 rounded-lg flex itemscenter justify-center mb-6">
+<i class="fas fa-paint-brush text-2xl text-white"></i>
+</div>
+<h3 class="text-2xl font-bold mb-3">Design UI/UX</h3>
+<p class="text-gray-300 mb-4">
+Conception d'interfaces utilisateur intuitives et 
+d'expériences mémorables.
+</p>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center">
+<i class="fas fa-check-circle text-purple-400 mr2"></i>
+Design d'interface
+</li>
+<li class="flex items-center">
+<i class="fas fa-check-circle text-purple-400 mr2"></iExpérience utilisateur
+</li>
+<li class="flex items-center">
+<i class="fas fa-check-circle text-purple-400 mr2"></i>
+Prototypage
+</li>
+</ul>
+</div>
+<!-- Service 3 -->
+<div class="glass-effect rounded-xl p-8 card-hover">
+<div class="w-16 h-16 bg-pink-600 rounded-lg flex itemscenter justify-center mb-6">
+<i class="fas fa-chart-line text-2xl text-white"></i>
+</div>
+<h3 class="text-2xl font-bold mb-3">Marketing Digital</h3>
+<p class="text-gray-300 mb-4">
+Stratégies digitales sur mesure pour augmenter votre 
+visibilité en ligne.
+</p>
+<ul class="space-y-2 text-gray-400">
+<li class="flex items-center">
+<i class="fas fa-check-circle text-pink-400 mr2"></i>
+SEO
+</li>
+<li class="flex items-center">
+<i class="fas fa-check-circle text-pink-400 mr2"></i>
+Publicité en ligne
+</li>
+<li class="flex items-center">
+<i class="fas fa-check-circle text-pink-400 mr2"></i>
+Stratégie de contenu
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio Section -->
+<section id="portfolio" class="py-20 bg-gray-900">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl md:text-5xl font-bold mb-4 gradienttext">Notre Portfolio</h2>
+<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+Découvrez nos réalisations qui ont marqué nos clients et leur 
+public.
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Project 1 -->
+<div class="relative group overflow-hidden rounded-xl cardhover">
+<img src="https://images.unsplash.com/photo-1551650975-
+87deedd944c3?ixlib=rb4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c
+rop&w=1974&q=80" alt="Projet E-commerce" class="w-full h-64 object-cover 
+transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-gradient-to-t from-black totransparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<h3 class="text-2xl font-bold text-white mb-2">Plateforme 
+E-commerce</h3>
+<p class="text-gray-300 mb-4">Une solution complète pour 
+vendre en ligne avec un design moderne.</p>
+<div class="flex space-x-2">
+<span class="px-3 py-1 bg-blue-600 rounded-full textsm">Développement</span>
+<span class="px-3 py-1 bg-purple-600 rounded-full 
+text-sm">Design</span>
+</div>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="relative group overflow-hidden rounded-xl cardhover">
+<img src="https://images.unsplash.com/photo-1467232004584-
+a241de8bcf5d?ixlib=rb4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c
+rop&w=2069&q=80" alt="Application Mobile" class="w-full h-64 object-cover 
+transition duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-gradient-to-t from-black totransparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<h3 class="text-2xl font-bold text-white mb2">Application Mobile</h3>
+<p class="text-gray-300 mb-4">Une application intuitive 
+pour gérer vos finances personnelles.</p>
+<div class="flex space-x-2">
+<span class="px-3 py-1 bg-blue-600 rounded-full textsm">Mobile</span>
+<span class="px-3 py-1 bg-pink-600 rounded-full textsm">UI/UX</span>
+</div>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="relative group overflow-hidden rounded-xl cardhover">
+<img src="https://images.unsplash.com/photo-1551288049-
+bebda4e38f71?ixlib=rb4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c
+rop&w=2070&q=80" alt="Site Corporate" class="w-full h-64 object-cover transition 
+duration-500 group-hover:scale-110">
+<div class="absolute inset-0 bg-gradient-to-t from-black totransparent opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<h3 class="text-2xl font-bold text-white mb-2">Site 
+Corporate</h3>
+<p class="text-gray-300 mb-4">Une présence en ligne 
+professionnelle pour une entreprise internationale.</p>
+<div class="flex space-x-2">
+<span class="px-3 py-1 bg-blue-600 rounded-full textsm">Web</span>
+<span class="px-3 py-1 bg-green-600 rounded-full 
+text-sm">SEO</span>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mt-12">
+<a href="#" class="inline-flex items-center px-6 py-3 border 
+border-transparent text-base font-medium rounded-md text-white bg-blue-600 
+hover:bg-blue-700 transition duration-300">
+Voir tous nos projets
+<svg class="ml-3 -mr-1 h-5 w-5"
+xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+<path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 
+0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+</svg>
+</a>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section id="about" class="py-20 bg-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+<div class="mb-12 lg:mb-0">
+<h2 class="text-4xl md:text-5xl font-bold mb-6 gradienttext">Qui sommes-nous ?</h2>
+<p class="text-lg text-gray-300 mb-6">
+VisionFutur est une agence digitale innovante spécialisée 
+dans la création d'expériences web et mobiles exceptionnelles.
+</p>
+<p class="text-lg text-gray-300 mb-8">
+Fondée en 2015, notre équipe de passionnés travaille sans 
+relâche pour transformer vos idées en solutions digitales performantes et 
+esthétiques.
+</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-gray-700 bg-opacity-50 p-4 rounded-lg">
+<div class="text-3xl font-bold text-blue-400 mb2">150+</div>
+<div class="text-gray-300">Projets réalisés</div>
+</div>
+<div class="bg-gray-700 bg-opacity-50 p-4 rounded-lg">
+<div class="text-3xl font-bold text-purple-400 mb2">98%</div>
+<div class="text-gray-300">Clients satisfaits</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="relative z-10">
+<img src="https://images.unsplash.com/photo1579389083078-4e7018379f7e?ixlib=rb-
+4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c
+rop&w=2070&q=80" alt="Notre équipe" class="rounded-xl shadow-2xl w-full">
+</div>
+<div class="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-600 
+rounded-full opacity-20"></div>
+<div class="absolute -top-6 -left-6 w-32 h-32 bg-purple-600 
+rounded-full opacity-20"></div>
+<div class="absolute top-1/2 left-1/2 transform -translate-x1/2 -translate-y-1/2 w-40 h-40 bg-pink-600 rounded-full opacity-20"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-20 bg-gray-900">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Ce 
+qu'ils disent de nous</h2>
+<p class="text-xl text-gray-300 max-w-3xl mx-auto">
+Découvrez les témoignages de nos clients satisfaits.
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="glass-effect rounded-xl p-8 card-hover">
+<div class="flex items-center mb-6">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+<img
+src="https://randomuser.me/api/portraits/women/43.jpg" alt="Client" class="w-full 
+h-full object-cover">
+</div>
+<div>
+<h4 class="font-bold">Sophie Martin</h4>
+<p class="text-gray-400 text-sm">CEO, Entreprise 
+XYZ</p>
+</div>
+</div>
+<p class="text-gray-300 italic">
+"VisionFutur a transformé notre présence en ligne. Leur 
+approche professionnelle et leur créativité ont dépassé nos attentes."
+</p>
+<div class="mt-4 text-yellow-400">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="glass-effect rounded-xl p-8 card-hover">
+<div class="flex items-center mb-6">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+<img
+src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-full 
+h-full object-cover">
+</div>
+<div>
+<h4 class="font-bold">Thomas Dubois</h4>
+<p class="text-gray-400 text-sm">Directeur 
+Marketing</p>
+</div>
+</div>
+<p class="text-gray-300 italic">
+"Le site web qu'ils ont créé pour nous a augmenté notre 
+taux de conversion de 40%. Un travail remarquable !"
+</p>
+<div class="mt-4 text-yellow-400">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star-half-alt"></i>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="glass-effect rounded-xl p-8 card-hover">
+<div class="flex items-center mb-6">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+<img
+src="https://randomuser.me/api/portraits/women/65.jpg" alt="Client" class="w-full 
+h-full object-cover">
+</div>
+<div>
+<h4 class="font-bold">Émilie Laurent</h4>
+<p class="text-gray-400 text-sm">Fondatrice, Startup 
+ABC</p>
+</div>
+</div>
+<p class="text-gray-300 italic">
+"Leur équipe a su comprendre nos besoins spécifiques et 
+livrer une solution parfaitement adaptée à notre activité."
+</p>
+<div class="mt-4 text-yellow-400">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+<div class="mb-12 lg:mb-0">
+<h2 class="text-4xl md:text-5xl font-bold mb-6 gradienttext">Contactez-nous</h2>
+<p class="text-lg text-gray-300 mb-8">
+Prêt à donner vie à votre projet ? Remplissez le 
+formulaire ou contactez-nous directement.
+</p>
+<div class="space-y-6">
+<div class="flex items-start">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-full bg-blue-600 
+flex items-center justify-center">
+<i class="fas fa-map-marker-alt text-white 
+text-xl"></i>
+</div>
+</div>
+<div class="ml-4">
+<h3 class="text-lg font-medium textwhite">Adresse</h3>
+<p class="text-gray-300">123 Rue de la 
+Technologie, 75000 Paris</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-full bg-purple-600 
+flex items-center justify-center">
+<i class="fas fa-phone-alt text-white textxl"></i>
+</div>
+</div>
+<div class="ml-4">
+<h3 class="text-lg font-medium textwhite">Téléphone</h3>
+<p class="text-gray-300">+33 1 23 45 67 89</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 rounded-full bg-pink-600 
+flex items-center justify-center">
+<i class="fas fa-envelope text-white textxl"></i>
+</div>
+</div>
+<div class="ml-4">
+<h3 class="text-lg font-medium textwhite">Email</h3>
+<p class="text-gray300">contact@visionfutur.com</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-effect rounded-xl p-8">
+<form id="contactForm" class="space-y-6">
+<div>
+<label for="name" class="block text-sm font-medium 
+text-gray-300">Nom complet</label>
+<input type="text" id="name" name="name" required
+class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 
+text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+</div>
+<div>
+<label for="email" class="block text-sm font-medium 
+text-gray-300">Email</label>
+<input type="email" id="email" name="email" required
+class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 
+text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+</div>
+<div>
+<label for="subject" class="block text-sm font-medium 
+text-gray-300">Sujet</label>
+<input type="text" id="subject" name="subject"
+required class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md 
+py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+</div>
+<div>
+<label for="message" class="block text-sm font-medium 
+text-gray-300">Message</label>
+<textarea id="message" name="message" rows="4"
+required class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md 
+py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue500"></textarea>
+</div>
+<div>
+<button type="submit" class="w-full flex justifycenter py-3 px-4 border border-transparent rounded-md shadow-sm text-lg fontmedium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 
+focus:ring-offset-2 focus:ring-blue-500 transition duration-300">
+Envoyer le message
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter -->
+<section class="py-16 bg-gradient-to-r from-blue-900 to-purple-900">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Abonnezvous à notre newsletter</h2>
+<p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+Recevez les dernières actualités, conseils et offres spéciales 
+directement dans votre boîte mail.
+</p>
+<form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4">
+<input type="email" placeholder="Votre email" required
+class="flex-grow px-5 py-3 rounded-lg bg-white bg-opacity-20 text-white 
+placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white">
+<button type="submit" class="px-6 py-3 bg-white text-blue-900 
+font-semibold rounded-lg hover:bg-gray-100 transition duration-300">
+S'abonner
+</button>
+</form>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-gray-900 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div>
+<h3 class="text-2xl font-bold gradient-text mb4">VisionFutur</h3>
+<p class="text-gray-400">
+Nous transformons vos idées en solutions digitales 
+exceptionnelles.
+</p>
+<div class="flex space-x-4 mt-6">
+<a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">
+<i class="fab fa-facebook-f text-xl"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">
+<i class="fab fa-twitter text-xl"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">
+<i class="fab fa-instagram text-xl"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">
+<i class="fab fa-linkedin-in text-xl"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold text-white mb-4">Liens 
+rapides</h4>
+<ul class="space-y-3">
+<li><a href="#home" class="text-gray-400 hover:text-white 
+transition duration-300">Accueil</a></li>
+<li><a href="#services" class="text-gray-400 hover:textwhite transition duration-300">Services</a></li>
+<li><a href="#portfolio" class="text-gray-400 hover:textwhite transition duration-300">Portfolio</a></li>
+<li><a href="#about" class="text-gray-400 hover:textwhite transition duration-300">À propos</a></li>
+<li><a href="#contact" class="text-gray-400 hover:textwhite transition duration-300">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold text-white mb4">Services</h4>
+<ul class="space-y-3">
+<li><a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">Développement Web</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">Design UI/UX</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">Marketing Digital</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">Applications Mobiles</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white 
+transition duration-300">SEO</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold text-white mb4">Contact</h4>
+<address class="not-italic text-gray-400 space-y-3">
+<p>123 Rue de la Technologie</p>
+<p>75000 Paris, France</p>
+<p>Email: contact@visionfutur.com</p>
+<p>Tél: +33 1 23 45 67 89</p>
+</address>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-12 pt-8 flex flex-col 
+md:flex-row justify-between items-center">
+<p class="text-gray-400 text-sm mb-4 md:mb-0">
+&copy; 2023 VisionFutur. Tous droits réservés.
+</p>
+<div class="flex space-x-6">
+<a href="#" class="text-gray-400 hover:text-white text-sm 
+transition duration-300">Politique de confidentialité</a>
+<a href="#" class="text-gray-400 hover:text-white text-sm 
+transition duration-300">Conditions d'utilisation</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Back to Top Button -->
+<button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 
+rounded-full flex items-center justify-center text-white shadow-lg hover:bg-blue700 transition duration-300 opacity-0 invisible">
+<i class="fas fa-arrow-up"></i>
+</button>
+<!-- JavaScript -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector("#contactForm"); // Ton formulaire
-        const submitBtn = form.querySelector("button[type='submit']"); // Bouton envoyer
-
-        // Crée le message de confirmation caché
-        const confirmation = document.createElement("p");
-        confirmation.classList.add("mt-3", "text-sm", "font-medium", "text-center", "w-full", "p-3", "rounded-lg", "hidden");
-
-        // Insère le message juste après le bouton
-        submitBtn.insertAdjacentElement("afterend", confirmation);
-
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const data = new FormData(form);
-
-            fetch(form.action, {
-                method: form.method,
-                body: data,
-                headers: { "Accept": "application/json" }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        confirmation.classList.remove("hidden", "bg-red-100", "text-red-700");
-                        confirmation.classList.add("bg-green-100", "text-green-700");
-                        confirmation.innerText = "✅ Merci ! Votre message a été reçu avec succès.";
-                        form.reset(); // Réinitialise les champs
-                    } else {
-                        confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
-                        confirmation.classList.add("bg-red-100", "text-red-700");
-                        confirmation.innerText = "❌ Erreur lors de l'envoi. Veuillez réessayer.";
-                    }
-                })
-                .catch(() => {
-                    confirmation.classList.remove("hidden", "bg-green-100", "text-green-700");
-                    confirmation.classList.add("bg-red-100", "text-red-700");
-                    confirmation.innerText = "⚠️ Erreur réseau, veuillez réessayer.";
-                });
-        });
-    });
+// Mobile menu toggle
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileMenuButton.addEventListener('click', () => {
+mobileMenu.classList.toggle('hidden');
+});
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function(e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+if (targetId === '#') return;
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+window.scrollTo({
+top: targetElement.offsetTop - 80,
+behavior: 'smooth'
+});
+// Close mobile menu if open
+if (!mobileMenu.classList.contains('hidden')) {
+mobileMenu.classList.add('hidden');
+}
+}
+});
+});
+// Back to top button
+const backToTopButton = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+if (window.pageYOffset > 300) {
+backToTopButton.classList.remove('opacity-0', 'invisible');
+backToTopButton.classList.add('opacity-100', 'visible');
+} else {
+backToTopButton.classList.remove('opacity-100', 'visible');
+backToTopButton.classList.add('opacity-0', 'invisible');
+}
+});
+backToTopButton.addEventListener('click', () => {
+window.scrollTo({
+top: 0,
+behavior: 'smooth'
+});
+});
+// Form submission
+const contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', (e) => {
+e.preventDefault();
+// Get form values
+const name = document.getElementById('name').value;
+const email = document.getElementById('email').value;
+const subject = document.getElementById('subject').value;
+const message = document.getElementById('message').value;
+// Here you would typically send the form data to a server
+// For this example, we'll just show an alert
+alert(`Merci ${name} pour votre message! Nous vous contacterons 
+bientôt à ${email}.`);
+// Reset form
+contactForm.reset();
+});
+// Typing effect
+const words = ["Transformez", "Créez", "Imaginez", "Développez"];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typingElement = document.querySelector('.typing-effect');
+function type() {
+const currentWord = words[wordIndex];
+if (isDeleting) {
+typingElement.textContent = currentWord.substring(0, charIndex -
+1);
+charIndex--;
+} else {
+typingElement.textContent = currentWord.substring(0, charIndex +
+1);
+charIndex++;
+}
+if (!isDeleting && charIndex === currentWord.length) {
+isDeleting = true;
+setTimeout(type, 1000);
+} else if (isDeleting && charIndex === 0) {
+isDeleting = false;
+wordIndex = (wordIndex + 1) % words.length;
+setTimeout(type, 500);
+} else {
+setTimeout(type, isDeleting ? 100 : 200);
+}
+}
+// Start typing effect
+setTimeout(type, 1000);
+// Animate elements on scroll
+const animateOnScroll = () => {
+const elements = document.querySelectorAll('.card-hover, .glasseffect');
+elements.forEach(element => {
+const elementPosition = element.getBoundingClientRect().top;
+const screenPosition = window.innerHeight / 1.3;
+if (elementPosition < screenPosition) {
+element.classList.add('animate__animated',
+'animate__fadeInUp');
+}
+});
+};
+window.addEventListener('scroll', animateOnScroll);
+window.addEventListener('load', animateOnScroll);
 </script>
-
-
-
-<body class="font-sans antialiased text-gray-800 scroll-smooth">
-    <!-- Progress bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <!-- Floating contact button -->
-    <div class="floating-button" id="floatingContactBtn">
-        <i class="fas fa-headset"></i>
-    </div>
-
-    <!-- Back to top button -->
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <i class="fas fa-cogs text-blue-600 text-3xl mr-2"></i>
-                        <span class="text-xl font-bold text-blue-600">Maintenance Industrielle Pro</span>
-                    </div>
-                </div>
-                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-                    <a href="/"
-                        class="text-blue-600 font-medium px-3 py-2 text-sm hover:text-blue-800 transition-colors duration-200">Accueil</a>
-                    <a href="#services"
-                        class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200">Services</a>
-                    <a href="#avantages"
-                        class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200">Avantages</a>
-                    <a href="#contact"
-                        class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm transition-colors duration-200">Contact</a>
-                    <a href="#contact"
-                        class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
-                        Devis gratuit
-                    </a>
-                </div>
-                <div class="-mr-2 flex items-center md:hidden">
-                    <button id="mobile-menu-button" type="button"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200">
-                        <span class="sr-only">Ouvrir menu principal</span>
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="/"
-                    class="block pl-3 pr-4 py-2 border-l-4 border-blue-500 text-base font-medium text-blue-700 bg-blue-50">Accueil</a>
-                <a href="#services"
-                    class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200">Services</a>
-                <a href="#avantages"
-                    class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200">Avantages</a>
-                <a href="#contact"
-                    class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200">Contact</a>
-                <a href="#contact"
-                    class="block w-full text-center ml-3 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">Devis
-                    gratuit</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero text-white py-20 md:py-32 flex items-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="md:w-2/3 lg:w-1/2">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 animate-fadeIn">Nos services de
-                    maintenance industrielle</h1>
-                <p class="text-xl md:text-2xl mb-8 animate-fadeIn delay-100">Des solutions complètes adaptées à vos
-                    besoins spécifiques.</p>
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fadeIn delay-200">
-                    <a href="#contact"
-                        class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
-                        <i class="fas fa-file-signature mr-2"></i> Demandez un devis gratuit
-                    </a>
-                    <a href="#services"
-                        class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 bg-opacity-60 hover:bg-opacity-70 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
-                        <i class="fas fa-tools mr-2"></i> Nos services
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Nos services de maintenance industrielle
-                </h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">Des solutions complètes adaptées à vos besoins
-                    spécifiques</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Service 1 -->
-                <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <div
-                            class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                            <i class="fas fa-shield-alt text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">Maintenance préventive</h3>
-                        <p class="text-gray-600">Programmes personnalisés pour anticiper les pannes et prolonger la
-                            durée de vie de vos équipements.</p>
-                        <button
-                            class="mt-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
-                            En savoir plus <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <div
-                            class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                            <i class="fas fa-tools text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">Maintenance corrective</h3>
-                        <p class="text-gray-600">Interventions rapides et efficaces pour réparer vos équipements et
-                            minimiser les temps d'arrêt.</p>
-                        <button
-                            class="mt-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
-                            En savoir plus <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <div
-                            class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                            <i class="fas fa-clipboard-list text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">Gestion des équipements</h3>
-                        <p class="text-gray-600">Suivi complet de votre parc machines avec historique des interventions
-                            et planification optimisée.</p>
-                        <button
-                            class="mt-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
-                            En savoir plus <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Service 4 -->
-                <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <div
-                            class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                            <i class="fas fa-clock text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">Intervention d'urgence 24/7</h3>
-                        <p class="text-gray-600">Disponibilité permanente pour répondre à vos urgences et rétablir
-                            rapidement votre production.</p>
-                        <button
-                            class="mt-4 text-blue-600 hover:text-blue-800 transition-colors duration-200 flex items-center">
-                            En savoir plus <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Autres services Section -->
-    <section id="more-services" class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Nos autres services de maintenance</h2>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-gray-700">
-
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                        <i class="fas fa-blender text-xl"></i>
-                    </div>
-                    <span>Maintenance des appareils électro-ménagers</span>
-                </div>
-
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                        <i class="fas fa-bolt text-xl"></i>
-                    </div>
-                    <span>Maintenance des installations électriques</span>
-                </div>
-
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                        <i class="fas fa-computer text-xl"></i>
-                    </div>
-                    <span>Maintenance informatique (matériel et logiciels)</span>
-                </div>
-
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                        <i class="fas fa-building text-xl"></i>
-                    </div>
-                    <span>Maintenance des infrastructures (bâtiments et réseaux)</span>
-                </div>
-
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                        <i class="fas fa-truck text-xl"></i>
-                    </div>
-                    <span>Maintenance des véhicules et des transports</span>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Avantages Section -->
-    <section id="avantages" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Pourquoi choisir notre expertise ?</h2>
-                <p class="mt-4 max-w-2xl text-xl text-gray-600 mx-auto">Notre engagement pour votre performance
-                    industrielle</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <div class="flex items-start mb-8">
-                        <div class="flex-shrink-0">
-                            <div
-                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                                <i class="fas fa-user-tie text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-lg text-gray-900 font-medium">E-mail</p>
-                            <p class="text-gray-600"><a href="mailto:kellymarlone2002@gmail.com"
-                                    class="text-blue-600 underline">kellymarlone2002@gmail.com</a></p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start mb-8">
-                        <div class="flex-shrink-0">
-                            <div
-                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                                <i class="fas fa-bolt text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-medium text-gray-900">Réactivité et disponibilité</h3>
-                            <p class="mt-2 text-gray-600">Engagement de réponse sous 2h pour les urgences et délais
-                                d'intervention parmi les plus rapides du secteur.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="flex items-start mb-8">
-                        <div class="flex-shrink-0">
-                            <div
-                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                                <i class="fas fa-microchip text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-medium text-gray-900">Technologies avancées</h3>
-                            <p class="mt-2 text-gray-600">Outils de diagnostic et solutions innovantes pour une
-                                maintenance prédictive efficace.</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start mb-8">
-                        <div class="flex-shrink-0">
-                            <div
-                                class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                                <i class="fas fa-hard-hat text-xl"></i>
-                            </div>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-medium text-gray-900">Respect des normes de sécurité</h3>
-                            <p class="mt-2 text-gray-600">Conformité totale avec les réglementations en vigueur et
-                                procédures strictes pour la sécurité de tous.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-12 bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="md:flex">
-                    <div class="md:w-1/2 p-8 bg-blue-600 text-white">
-                        <h3 class="text-2xl font-bold mb-4">Notre processus en 4 étapes</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div
-                                    class="flex-shrink-0 bg-blue-700 rounded-full h-8 w-8 flex items-center justify-center mr-4">
-                                    1</div>
-                                <div>
-                                    <h4 class="font-semibold">Analyse des besoins</h4>
-                                    <p class="text-blue-100">Évaluation complète de vos équipements et processus</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div
-                                    class="flex-shrink-0 bg-blue-700 rounded-full h-8 w-8 flex items-center justify-center mr-4">
-                                    2</div>
-                                <div>
-                                    <h4 class="font-semibold">Proposition sur mesure</h4>
-                                    <p class="text-blue-100">Plan de maintenance adapté à vos spécificités</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div
-                                    class="flex-shrink-0 bg-blue-700 rounded-full h-8 w-8 flex items-center justify-center mr-4">
-                                    3</div>
-                                <div>
-                                    <h4 class="font-semibold">Mise en œuvre</h4>
-                                    <p class="text-blue-100">Déploiement par nos équipes certifiées</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div
-                                    class="flex-shrink-0 bg-blue-700 rounded-full h-8 w-8 flex items-center justify-center mr-4">
-                                    4</div>
-                                <div>
-                                    <h4 class="font-semibold">Suivi et amélioration</h4>
-                                    <p class="text-blue-100">Optimisation continue des performances</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="md:w-1/2 p-8">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Demandez une consultation gratuite</h3>
-                        <p class="text-gray-600 mb-6">Nos experts analyseront vos besoins et vous proposeront la
-                            solution la plus adaptée à votre situation.</p>
-                        <a href="#contact"
-                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-                            <i class="fas fa-calendar-check mr-2"></i> Prendre rendez-vous
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="bg-blue-700 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-extrabold mb-6">Contactez-nous dès aujourd'hui pour une consultation personnalisée
-            </h2>
-            <p class="text-xl mb-8">Notre équipe est à votre disposition pour répondre à toutes vos questions et
-                élaborer une solution adaptée à vos besoins.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="tel:+2296060889072"
-                    class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
-                    <i class="fas fa-phone-alt mr-2"></i> Appelez-nous
-                </a>
-                <a href="#contact"
-                    class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900 md:py-4 md:text-lg md:px-10 transition-colors duration-200">
-                    <i class="fas fa-envelope mr-2"></i> Envoyez un message
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <!-- Formulaire -->
-    <section id="contact" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 lg:gap-8">
-                <div class="mb-8 lg:mb-0">
-                    <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Prenez contact avec nous</h2>
-                    <p class="text-lg text-gray-600 mb-8">Remplissez le formulaire et nous vous recontacterons dans les
-                        plus brefs délais.</p>
-
-                    <form id="contactForm" name="contact" method="POST" data-netlify="true" action="/#success"
-                        class="space-y-6">
-                        <!-- Champ caché obligatoire pour Netlify -->
-                        <input type="hidden" name="form-name" value="contact">
-
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
-                            <input type="text" id="name" name="name" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                        </div>
-
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-                            <input type="email" id="email" name="email" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                        </div>
-
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
-                            <input type="tel" id="phone" name="phone"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                        </div>
-
-                        <div>
-                            <label for="service" class="block text-sm font-medium text-gray-700">Service
-                                concerné</label>
-                            <select id="service" name="service"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
-                                <option value="">Sélectionnez un service</option>
-                                <option value="Maintenance préventive">Maintenance préventive</option>
-                                <option value="Maintenance corrective">Maintenance corrective</option>
-                                <option value="Gestion des équipements">Gestion des équipements</option>
-                                <option value="Intervention d'urgence">Intervention d'urgence</option>
-                                <option value="Autre">Autre</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-                            <textarea id="message" name="message" rows="4" required
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"></textarea>
-                        </div>
-
-                        <div>
-                            <button type="submit"
-                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
-                                <i class="fas fa-paper-plane mr-2"></i> Envoyer ma demande
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Message de confirmation caché par défaut -->
-                    <div id="thankYouMessage"
-                        class="hidden text-center p-6 bg-green-100 border border-green-300 rounded-md mt-4 text-green-800 font-medium">
-                        ✅ Merci ! Votre demande a été envoyée avec succès.
-                    </div>
-
-                    <script>
-                        // Afficher le message de confirmation si l'URL contient #success
-                        if (window.location.hash === "#success") {
-                            document.getElementById("contactForm").style.display = "none";
-                            document.getElementById("thankYouMessage").classList.remove("hidden");
-                            history.replaceState(null, null, ' '); // supprime #success de l’URL
-                        }
-                    </script>
-                </div>
-
-                <!-- <script>
-                        const form = document.getElementById("contactForm");
-                        const thankYouMessage = document.getElementById("thankYouMessage");
-                        const sendMessageLinks = document.querySelectorAll('a[href="#contact"]'); // Tous les liens vers le formulaire
-
-                        // Si le formulaire vient d'être soumis via Netlify
-                        if (window.location.hash === "#success") {
-                            form.style.display = "none";
-                            thankYouMessage.classList.remove("hidden");
-                        }
-
-                        // Lorsque l'utilisateur clique sur un lien "Envoyez un message"
-                        sendMessageLinks.forEach(link => {
-                            link.addEventListener("click", (e) => {
-                                e.preventDefault(); // Empêche le scroll automatique
-                                form.style.display = "block"; // Rouvre le formulaire
-                                thankYouMessage.classList.add("hidden"); // Cache le message de succès
-                                form.reset(); // Réinitialise les champs
-                                history.replaceState(null, null, ' '); // Supprime le hash #success de l'URL
-                                form.scrollIntoView({ behavior: 'smooth' }); // Scroll vers le formulaire
-                            });
-                        });
-
-                    </script>
-
-                    <!-- Script pour Netlify Forms avec confirmation 
-                    <script>
-                        if (window.location.hash === "#success") {
-                            document.getElementById("contactForm").style.display = "none";
-                            document.getElementById("thankYouMessage").classList.remove("hidden");
-                        }
-                    </script> -->
-
-            </div>
-
-            <div class="lg:pl-8">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h3>
-
-                <div class="space-y-6">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-map-marker-alt text-blue-600 text-xl"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-lg text-gray-900 font-medium">Adresse</p>
-                            <p class="text-gray-600">Cotonou, Bénin</p>
-                        </div>
-                    </div>
-
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-phone-alt text-blue-600 text-xl"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-lg text-gray-900 font-medium">Téléphone</p>
-                            <p class="text-gray-600"><a href="https://wa.me/2290160889072" target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="inline-flex items-center text-gray-600 hover:underline"><i
-                                        class="fab fa-whatsapp text-green-500 mr-2"></i>01 60 88 90
-                                    72</a><br>Urgence 24/7:<a href="tel:+0153783937"
-                                    class="text-gray-600 hover:underline">01 53
-                                    78 39 37</p>
-                        </div>
-                    </div>
-
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-envelope text-blue-600 text-xl"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-gray-600">
-                                <a href="mailto:kellymarlone2002@gmail.com"
-                                    class="text-blue-600 underline">kellymarlone2002@gmail.com
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-clock text-blue-600 text-xl"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-lg text-gray-900 font-medium">Horaires</p>
-                            <p class="text-gray-600">Lundi-vendredi: 8h-19h<br>Urgences: 7j/7</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sections 'Nos réseaux sociaux' et carte supprimées -->
-            </div>
-        </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Maintenance Industrielle Pro</h3>
-                    <p class="text-gray-400">Experts en maintenance industrielle. Nous garantissons la performance et la
-                        sécurité de vos équipements.</p>
-                    <div class="mt-4 flex space-x-4">
-                        <!--<a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <i class="fab fa-instagram"></i>
-                        </a> -->
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-200">Accueil</a></li>
-                        <li><a href="#services"
-                                class="text-gray-400 hover:text-white transition-colors duration-200">Services</a></li>
-                        <li><a href="#avantages"
-                                class="text-gray-400 hover:text-white transition-colors duration-200">Avantages</a></li>
-                        <li><a href="#contact"
-                                class="text-gray-400 hover:text-white transition-colors duration-200">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Légal</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Mentions
-                                légales</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Politique
-                                de confidentialité</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">CGV</a>
-                        </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-200">Cookies</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
-                    <p class="text-gray-400 mb-4">Abonnez-vous pour recevoir nos actualités et conseils.</p>
-                    <form class="flex" id="newsletter-form">
-                        <input type="e-mail" id="newsletter-email" placeholder="Votre e-mail"
-                            class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-900" required>
-                        <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-md transition-colors duration-200">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                    <p class="text-xs text-gray-500 mt-2">En vous abonnant, vous acceptez notre politique de
-                        confidentialité.</p>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">© 2023 MaintenanceIndustriellePro. Tous droits réservés.</p>
-                <div class="mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white text-sm mr-4 transition-colors duration-200"><b>By
-                            KelMultitek</b></a>
-                    <a href="#" class="text-gray-400 hover:text-white text-sm mr-4 transition-colors duration-200">Plan
-                        du site</a>
-                    <a href="#"
-                        class="text-gray-400 hover:text-white text-sm transition-colors duration-200">Accessibilité</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal -->
-    <div id="serviceModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
-            <div id="modalContent" class="text-gray-700"></div>
-        </div>
-    </div>
-
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function () {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
-
-        // Fonction pour afficher la section contact
-        function showContactSection() {
-            const contactSection = document.getElementById('contact');
-            if (!contactSection) return;
-            contactSection.classList.add('show');
-            setTimeout(() => {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-            }, 50);
-        }
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if (!targetId || targetId === '#') return;
-
-                if (targetId === '#contact') {
-                    e.preventDefault();
-                    showContactSection();
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                    return;
-                }
-
-                e.preventDefault();
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
-            });
-        });
-
-        // Contact form submission
-        const contactForm = document.querySelector('#contact form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-
-                const formData = new FormData(contactForm);
-
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        alert('Merci pour votre message. Nous vous contacterons rapidement.');
-                        contactForm.reset();
-                    } else {
-                        throw new Error('Erreur lors de l\'envoi du formulaire');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement par téléphone.');
-                }
-            });
-        }
-
-        // Newsletter form submission
-        const newsletterForm = document.getElementById('newsletter-form');
-        if (newsletterForm) {
-            newsletterForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const email = document.getElementById('newsletter-email').value;
-                alert(`Merci pour votre inscription avec l'email: ${email}`);
-                newsletterForm.reset();
-            });
-        }
-
-        // Floating contact button
-        const floatingContactBtn = document.getElementById('floatingContactBtn');
-        if (floatingContactBtn) {
-            floatingContactBtn.addEventListener('click', function () {
-                showContactSection();
-            });
-        }
-
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
-        if (backToTop) {
-            window.addEventListener('scroll', function () {
-                if (window.pageYOffset > 300) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
-                }
-            });
-
-            backToTop.addEventListener('click', function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        // Progress bar
-        const progressBar = document.getElementById('progressBar');
-        if (progressBar) {
-            window.addEventListener('scroll', function () {
-                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollPercentage = (scrollTop / scrollHeight) * 100;
-                progressBar.style.width = scrollPercentage + '%';
-            });
-        }
-
-        // Service modal functionality
-        const serviceCards = document.querySelectorAll('.service-card button');
-        const modal = document.getElementById('serviceModal');
-        const closeBtn = document.querySelector('.close');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
-
-        // Service details
-        const serviceDetails = {
-            "Maintenance préventive": {
-                title: "Maintenance Préventive",
-                content: "<p>Nos programmes de maintenance préventive sont conçus pour anticiper les pannes et prolonger la durée de vie de vos équipements. Nous établissons un calendrier personnalisé basé sur :</p><ul class='list-disc pl-5 mt-2 space-y-1'><li>L'analyse des conditions d'utilisation</li><li>Les recommandations des fabricants</li><li>L'historique de vos équipements</li><li>Les contraintes de production</li></ul><p class='mt-4'>Nos techniciens effectuent des vérifications systématiques, des nettoyages, des graissages et des remplacements préventifs pour maintenir vos machines en parfait état de fonctionnement.</p>"
-            },
-            "Maintenance corrective": {
-                title: "Maintenance Corrective",
-                content: "<p>Lorsqu'une panne survient, notre équipe intervient rapidement pour diagnostiquer et réparer vos équipements. Notre processus :</p><ol class='list-decimal pl-5 mt-2 space-y-1'><li>Diagnostic précis de la panne</li><li>Proposition de solution avec estimation des coûts</li><li>Réparation avec des pièces de qualité</li><li>Tests de fonctionnement</li><li>Rapport d'intervention détaillé</li></ol><p class='mt-4'>Nous disposons d'un stock important de pièces détachées pour les marques les plus courantes, ce qui nous permet de réduire les délais d'immobilisation.</p>"
-            },
-            "Gestion des équipements": {
-                title: "Gestion des Équipements",
-                content: "<p>Nous proposons une solution complète de gestion de votre parc machines comprenant :</p><div class='grid grid-cols-2 gap-4 mt-4'><div><h4 class='font-bold'>Suivi technique</h4><ul class='list-disc pl-5 mt-1 space-y-1 text-sm'><li>Historique des interventions</li><li>Consommation de pièces</li><li>Coûts de maintenance</li></ul></div><div><h4 class='font-bold'>Planification</h4><ul class='list-disc pl-5 mt-1 space-y-1 text-sm'><li>Calendrier des maintenances</li><li>Alertes pour les échéances</li><li>Optimisation des arrêts</li></ul></div></div><p class='mt-4'>Notre système vous donne une visibilité complète sur l'état de vos équipements et vous aide à prendre les meilleures décisions.</p>"
-            },
-            "Intervention d'urgence 24/7": {
-                title: "Intervention d'Urgence 24/7",
-                content: "<p>Notre service d'urgence est disponible 24h/24 et 7j/7 pour répondre à vos besoins critiques. Fonctionnalités :</p><div class='bg-blue-50 p-4 rounded-md mt-4'><div class='flex items-start mb-2'><div class='flex-shrink-0 text-blue-600 mr-2'><i class='fas fa-phone'></i></div><div><h4 class='font-bold'>Ligne dédiée</h4><p class='text-sm'>Numéro spécial pour les urgences avec réponse immédiate</p></div></div><div class='flex items-start mb-2'><div class='flex-shrink-0 text-blue-600 mr-2'><i class='fas fa-clock'></i></div><div><h4 class='font-bold'>Délai garanti</h4><p class='text-sm'>Intervention sur site en moins de 48 heures</p></div></div><div class='flex items-start'><div class='flex-shrink-0 text-blue-600 mr-2'><i class='fas fa-tools'></i></div><div><h4 class='font-bold'>Équipement complet</h4><p class='text-sm'>Véhicules équipés pour la plupart des réparations urgentes</p></div></div></div><p class='mt-4'>Nos techniciens d'astreinte sont formés pour gérer les situations les plus critiques et rétablir votre production dans les meilleurs délais.</p>"
-            }
-        };
-
-        serviceCards.forEach(card => {
-            card.addEventListener('click', function () {
-                const serviceTitle = this.parentElement.querySelector('h3').textContent;
-                const service = serviceDetails[serviceTitle];
-
-                if (service) {
-                    modalTitle.textContent = service.title;
-                    modalContent.innerHTML = service.content;
-                    modal.style.display = "block";
-                    document.body.style.overflow = "hidden";
-                }
-            });
-        });
-
-        closeBtn.addEventListener('click', function () {
-            modal.style.display = "none";
-            document.body.style.overflow = "auto";
-        });
-
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto";
-            }
-        });
-
-        // Animation on scroll
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.animate-fadeIn');
-
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        }
-
-        // Set initial state for animated elements
-        document.querySelectorAll('.animate-fadeIn').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        });
-
-        // Delay classes for sequential animation
-        document.querySelectorAll('.delay-100').forEach(el => {
-            el.style.transitionDelay = '0.1s';
-        });
-
-        document.querySelectorAll('.delay-200').forEach(el => {
-            el.style.transitionDelay = '0.2s';
-        });
-
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-    </script>
 </body>
-
-</html>
+</html
