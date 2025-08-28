@@ -650,31 +650,6 @@
                     </div>
                 </div>
 
-                <script>
-                    const form = document.getElementById("contactForm");
-                    const msg = document.getElementById("formMessage");
-
-                    form.addEventListener("submit", async (e) => {
-                        e.preventDefault();
-                        const data = new FormData(form);
-
-                        try {
-                            await fetch("/", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                                body: new URLSearchParams(data).toString(),
-                            });
-                            msg.textContent = " ✅ Merci ! Votre message a été reçu avec succès.";
-                            msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-green-500 text-white";
-                            form.reset();
-                        } catch (error) {
-                            msg.textContent = "❌ Une erreur est survenue. Veuillez réessayer.";
-                            msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-red-500 text-white";
-                        }
-                    });
-                </script>
-
-
                 <!-- Coordonnées -->
                 <div class="lg:pl-8">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h3>
@@ -1090,6 +1065,30 @@
 
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
+    </script>
+
+
+    <script>
+        const form = document.getElementById("contactForm");
+        const msg = document.getElementById("formMessage");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const data = new FormData(form);
+            try {
+                await fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(data).toString(),
+                });
+                msg.textContent = " ✅ Merci ! Votre message a été reçu avec succès.";
+                msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-green-500 text-white";
+                form.reset();
+            } catch (error) {
+                msg.textContent = "❌ Une erreur est survenue. Veuillez réessayer.";
+                msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-red-500 text-white";
+            }
+        });
     </script>
 </body>
 
