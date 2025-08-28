@@ -650,6 +650,31 @@
                     </div>
                 </div>
 
+                <script>
+                    const form = document.getElementById("contactForm");
+                    const msg = document.getElementById("formMessage");
+
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault();
+                        const data = new FormData(form);
+
+                        try {
+                            await fetch("/", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                                body: new URLSearchParams(data).toString(),
+                            });
+                            msg.textContent = " ✅ Merci ! Votre message a été reçu avec succès.";
+                            msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-green-500 text-white";
+                            form.reset();
+                        } catch (error) {
+                            msg.textContent = "❌ Une erreur est survenue. Veuillez réessayer.";
+                            msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-red-500 text-white";
+                        }
+                    });
+                </script>
+
+
                 <!-- Coordonnées -->
                 <div class="lg:pl-8">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6">Nos coordonnées</h3>
@@ -1066,65 +1091,6 @@
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
     </script>
-    
-    <script>
-        const form = document.getElementById("contactForm");
-        const thankYouMessage = document.getElementById("thankYouMessage");
-        const formWrapper = document.getElementById("formWrapper");
-
-        // Initialisation pour animation
-        formWrapper.style.transition = "max-height 0.8s ease, padding 0.8s ease, margin 0.8s ease";
-        formWrapper.style.overflow = "hidden";
-        formWrapper.style.maxHeight = formWrapper.scrollHeight + "px";
-
-        form.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            thankYouMessage.style.display = "none";  // Cacher message avant nouvel essai
-
-            const formData = new FormData(form);
-
-            try {
-                // Envoi Netlify Forms
-                const response = await fetch("/", {
-                    method: "POST",
-                    body: formData
-                });
-
-                if (response.ok) {
-                    form.reset();
-
-                    // Animation de glissement vers le haut (si souhaité)
-                    formWrapper.style.maxHeight = "0";
-                    formWrapper.style.paddingTop = "0";
-                    formWrapper.style.paddingBottom = "0";
-                    formWrapper.style.marginBottom = "0";
-
-                    // Afficher le message succès centré juste après le bouton
-                    thankYouMessage.style.display = "block";
-                    thankYouMessage.classList.remove("bg-red-100", "text-red-700");
-                    thankYouMessage.classList.add("bg-green-100", "text-green-700");
-                    thankYouMessage.style.textAlign = "center";
-                    thankYouMessage.innerText = "✅ Merci ! Votre message a été reçu avec succès.";
-
-                } else {
-                    thankYouMessage.style.display = "block";
-                    thankYouMessage.classList.remove("bg-green-100", "text-green-700");
-                    thankYouMessage.classList.add("bg-red-100", "text-red-700");
-                    thankYouMessage.style.textAlign = "center";
-                    thankYouMessage.innerText = "❌ Erreur lors de l'envoi. Veuillez réessayer.";
-                }
-            } catch (err) {
-                thankYouMessage.style.display = "block";
-                thankYouMessage.classList.remove("bg-green-100", "text-green-700");
-                thankYouMessage.classList.add("bg-red-100", "text-red-700");
-                thankYouMessage.style.textAlign = "center";
-                thankYouMessage.innerText = "⚠️ Erreur réseau, veuillez réessayer.";
-                console.error(err);
-            }
-        });
-    </script>
-
 </body>
 
 </html>
