@@ -1070,7 +1070,6 @@
         window.addEventListener('load', animateOnScroll);
     </script>
 
-    <!-- Modal
     <script>
         const form = document.getElementById("contactForm");
         const msg = document.getElementById("formMessage");
@@ -1092,54 +1091,9 @@
                 msg.className = "text-center mt-4 py-2 rounded-md font-medium bg-red-500 text-white";
             }
         });
-    </script>  -->
-
-    <script>
-        const form = document.getElementById("contactForm");
-          const succes = document.getElementById("thankYouMessage");
-        const formMessage = document.getElementById("formMessage");
-        const submitBtn = form.querySelector("button[type='submit']");
-
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            // Cacher le message avant soumission
-            formMessage.classList.add("hidden");
-
-            const data = new FormData(form);
-
-            try {
-                const response = await fetch("/", {
-                    method: "POST",
-                    body: data,
-                });
-
-                if (response.ok) {
-                      const form = document.getElementById("contactForm");
-                    // Message de succè
-                    succes.style.display="block"
-                    form.reset();
-                } else {
-                    // Message d'erreur serveur
-                    formMessage.textContent = "❌ Une erreur est survenue. Veuillez réessayer.";
-                    formMessage.className = "text-center mt-2 py-3 rounded-md font-medium bg-red-500 text-white";
-                }
-
-                formMessage.classList.remove("hidden");
-
-                // Scroll smooth si besoin pour visibilité du message
-                formMessage.scrollIntoView({ behavior: "smooth", block: "center" });
-            } catch (error) {
-                // Message d'erreur réseau
-                formMessage.textContent = "⚠️ Erreur réseau, veuillez réessayer.";
-                formMessage.className = "text-center mt-2 py-3 rounded-md font-medium bg-red-500 text-white";
-                formMessage.classList.remove("hidden");
-                formMessage.scrollIntoView({ behavior: "smooth", block: "center" });
-                console.error(error);
-            }
-        });
     </script>
 
+    
 </body>
 
 </html>
